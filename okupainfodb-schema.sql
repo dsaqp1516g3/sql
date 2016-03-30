@@ -24,6 +24,8 @@ CREATE TABLE casals(
 	description VARCHAR(512) NOT NULL,
 	valoracion FLOAT (16) NOT NULL, /* Positiva o Negativa según las votaciones*/
 	localization VARCHAR(264) NOT NULL, /*Donde se encuentra el casal (Pasaremos la dirección a la API de Google Maps que nos devolvera las coordenadas*/
+	latitud DOUBLE DEFAULT 0,
+	longitud DOUBLE DEFAULT 0,
 	eventos VARCHAR(512) NOT NULL,/* Eventos que ha creado el casal*/
 	FOREIGN KEY (eventos) REFERENCES events(id),
 	PRIMARY KEY (id)
@@ -36,18 +38,6 @@ CREATE TABLE auth_tokens (
 	PRIMARY KEY (token)
 );
 
-CREATE TABLE coordinates(
-	point_id INT(11) NOT NULL AUTO_INCREMENT,
-	latitud DOUBLE DEFAULT 0,
-	longitud DOUBLE DEFAULT 0,
-	PRIMARY KEY (point_id)
-);
-
-CREATE TABLE gps(
-	point_id INT(11) NOT NULL AUTO_INCREMENT,
-	gps POINT DEFAULT NULL,
-	PRIMARY KEY (point_id)
-) ENGINE=INNODB;
 
 CREATE TABLE user_roles (
 	userid BINARY(16) NOT NULL,
@@ -76,7 +66,6 @@ CREATE TABLE events (
 	localization VARCHAR(264)NOT NULL,
   	creation_timestamp DATETIME not null default current_timestamp,
     	FOREIGN KEY (creatorid) REFERENCES casals(id),
- 	FOREIGN KEY (participantes) REFERENCES users(id),
    	PRIMARY KEY (id)
 );
 
