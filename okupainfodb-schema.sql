@@ -11,7 +11,6 @@ CREATE TABLE users (
 	fullname VARCHAR(255) NOT NULL,
 	description VARCHAR(512) NOT NULL,
 	asistencia VARCHAR(512), /* Eventos a los que se ha apuntado el usuario*/
-	FOREIGN KEY (asistencia) REFERENCES events(id),
 	PRIMARY KEY (id)
 );
 
@@ -27,31 +26,7 @@ CREATE TABLE casals(
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
 	eventos VARCHAR(512) NOT NULL,/* Eventos que ha creado el casal*/
-	FOREIGN KEY (eventos) REFERENCES events(id),
 	PRIMARY KEY (id)
-);
-
-CREATE TABLE auth_tokens (
-	userid BINARY(16) NOT NULL,
-	token BINARY(16) NOT NULL,
-	FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
-	PRIMARY KEY (token)
-);
-
-
-CREATE TABLE user_roles (
-	userid BINARY(16) NOT NULL,
-	role ENUM ('creador', 'usuario'),
-	FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
-	PRIMARY KEY (userid, role)
-);
-
-CREATE TABLE users_events(
- 	userid BINARY(16) NOT NULL,
-	eventoid BINARY(16) NOT NULL,
-	FOREIGN KEY (userid) REFERENCES users(id),
-	FOREIGN KEY (eventoid) REFERENCES events(id),
-	PRIMARY KEY (userid, eventoid)
 );
 
 CREATE TABLE events (
@@ -61,12 +36,44 @@ CREATE TABLE events (
 	tipo VARCHAR(50) NOT NULL,
 	descripcion VARCHAR(500) NOT NULL,
 	participantes VARCHAR(1000),
-  	last_modified TIMESTAMP NOT NULL,
 	valoracion VARCHAR(100),
 	localization VARCHAR(264)NOT NULL,
+	latitud DOUBLE DEFAULT 0,
+	longitud DOUBLE DEFAULT 0,
+	last_modified TIMESTAMP NOT NULL,
   	creation_timestamp DATETIME not null default current_timestamp,
-    	FOREIGN KEY (creatorid) REFERENCES casals(id),
    	PRIMARY KEY (id)
+);
+
+
+CREATE TABLE auth_tokens (
+	userid BINARY(16) NOT NULL,
+	token BINARY(16) NOT NULL,
+	FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
+	PRIMARY KEY (token)
+);
+
+CREATE TABLE user_roles (
+	userid BINARY(16) NOT NULL,
+	role ENUM ('creador', 'usuario'),
+	FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
+	PRIMARY KEY (userid, role)
+);
+
+CREATE TABLE casals_events(
+	casalid BINARY(16) NOT NULL,
+	eventoid BINARY(16) NOT NULL,
+	FOREIGN KEY (casalid) REFERENCES casals(id),
+	FOREIGN KEY (eventoid) REFERENCES events(id),
+	PRIMARY KEY (casalid, eventoid)
+);
+
+CREATE TABLE users_events(
+ 	userid BINARY(16) NOT NULL,
+	eventoid BINARY(16) NOT NULL,
+	FOREIGN KEY (userid) REFERENCES users(id),
+	FOREIGN KEY (eventoid) REFERENCES events(id),
+	PRIMARY KEY (userid, eventoid)
 );
 
 CREATE TABLE comments_casals (
