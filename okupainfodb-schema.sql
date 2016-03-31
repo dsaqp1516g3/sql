@@ -33,7 +33,6 @@ CREATE TABLE events (
  	title VARCHAR(100) NOT NULL,
 	tipo VARCHAR(50) NOT NULL,
 	descripcion VARCHAR(500) NOT NULL,
-	participantes VARCHAR(1000),/*initialized to null when created*/
 	valoracion VARCHAR(100),
 	localization VARCHAR(264)NOT NULL,
 	latitud DOUBLE DEFAULT 0,
@@ -95,7 +94,7 @@ insert into user_roles (userid, role) values (@userid, 'registered');
 insert into casals (id, loginid, password, email, fullname, description, valoracion, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), 'casal', UNHEX(MD5('casal')), 'casal@casal.com','supercasal', 'casal per a joves', +10, 'carrer antic', 32, 2);
 
 select @creatorid:=id from casals where loginid = 'casal';
-insert into events (id, creatorid, title, tipo, descripcion, participantes, valoracion, localization, latitud, longitud, last_modified, creation_timestamp) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid, 'quedada','barbacoa','mengem amb el amics',NULL,-1, 'carrer nou',42,1, '0000-00-00 00:00:00','NOW');
+insert into events (id, creatorid, title, tipo, descripcion, valoracion, localization, latitud, longitud, last_modified, creation_timestamp) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid, 'quedada','barbacoa','mengem amb el amics',-1, 'carrer nou',42,1, '0000-00-00 00:00:00','NOW');
 
 select @userid:=id from users where loginid = 'okupa';
 select @eventoid:=id from events where title = 'quedada';
