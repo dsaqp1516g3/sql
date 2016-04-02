@@ -20,10 +20,12 @@ CREATE TABLE casals(
 	email VARCHAR(255) NOT NULL,
 	fullname VARCHAR(255) NOT NULL,
 	description VARCHAR(512) NOT NULL,
+  asistencia VARCHAR(512),
 	valoracion FLOAT (16) NOT NULL, /* Positiva o Negativa según las votaciones*/
 	localization VARCHAR(264) NOT NULL, /*Donde se encuentra el casal (Pasaremos la dirección a la API de Google Maps que nos devolvera las coordenadas*/
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
+  FOREIGN KEY (asistencia) REFERENCE users(id),
 	PRIMARY KEY (id)
 );
 
@@ -91,7 +93,8 @@ insert into users (id, loginid, password, email, fullname, description) values (
 select @userid:=id from users where loginid = 'okupa';
 insert into user_roles (userid, role) values (@userid, 'registered');
 
-insert into casals (id, loginid, password, email, fullname, description, valoracion, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), 'casal', UNHEX(MD5('casal')), 'casal@casal.com','supercasal', 'casal per a joves', +10, 'carrer antic', 32, 2);
+select @asistencia:=id from users where loginid = 'okupa';
+insert into casals (id, loginid, password, email, fullname, description,asistencia, valoracion, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), 'casal', UNHEX(MD5('casal')), 'casal@casal.com','supercasal', 'casal per a joves',@asistencia, +10, 'carrer antic', 32, 2);
 
 select @creatorid:=id from casals where loginid = 'casal';
 insert into events (id, creatorid, title, tipo, descripcion, valoracion, localization, latitud, longitud, last_modified, creation_timestamp) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid, 'quedada','barbacoa','mengem amb el amics',-1, 'carrer nou',42,1, '0000-00-00 00:00:00','NOW');
@@ -99,5 +102,3 @@ insert into events (id, creatorid, title, tipo, descripcion, valoracion, localiz
 select @userid:=id from users where loginid = 'okupa';
 select @eventoid:=id from events where title = 'quedada';
 insert into users_events(userid, eventoid) values(@userid, @eventoid);
-
-
