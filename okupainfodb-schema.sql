@@ -50,9 +50,23 @@ CREATE TABLE auth_tokens (
 	PRIMARY KEY (token)
 );
 
+/*CREATE TABLE auth_tokensc (
+  casalid BINARY(16) NOT NULL,
+  token BINARY(16) NOT NULL,
+  FOREIGN KEY (casalid) REFERENCES casals(id) on delete cascade,
+  PRIMARY KEY (token)
+);
+
+CREATE TABLE casals_roles (
+	casalid BINARY(16) NOT NULL,
+	role ENUM ('admin', 'casal'),
+	FOREIGN KEY (casalid) REFERENCES casals(id) on delete cascade,
+	PRIMARY KEY (casalid,role)
+);*///Provisional a modo de prueba
+
 CREATE TABLE user_roles (
 	userid BINARY(16) NOT NULL,
-	role ENUM ('creador', 'usuario'),
+	role ENUM ('admin', 'registered'),
 	FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
 	PRIMARY KEY (userid,role)
 );
