@@ -10,7 +10,7 @@ CREATE TABLE users (
 	email VARCHAR(255) NOT NULL,
 	fullname VARCHAR(255) NOT NULL,
 	description VARCHAR(512),
-  imagenperfil LONGBLOB,
+/*  imagenperfil LONGBLOB,*/
 	PRIMARY KEY (id)
 );
 
@@ -45,11 +45,28 @@ CREATE TABLE events (
 	localization VARCHAR(264)NOT NULL,
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
-  imagenevento LONGBLOB,
+/*  imagenevento LONGBLOB,*/
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
   PRIMARY KEY (id)
+);
+
+CREATE TABLE events_pictures (
+  eventid BINARY(16) NOT NULL,
+  userid BINARY(16) NOT NULL,
+  filename VARCHAR(16) NOT NULL,
+  FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
+  FOREIGN KEY (eventid) REFERENCES events(id) on delete cascade,
+  PRIMARY KEY (eventid,userid)
+);
+
+CREATE TABLE users_pictures (
+  userid BINARY(16) NOT NULL,
+  filename VARCHAR(16) NOT NULL,
+  FOREIGN KEY (userid) REFERENCES users(id) on delete cascade,
+  FOREIGN KEY (eventid) REFERENCES events(id) on delete cascade,
+  PR
 );
 
 CREATE TABLE auth_tokens (
@@ -95,6 +112,8 @@ CREATE TABLE comments_events (
 	FOREIGN KEY (eventoid) REFERENCES events(id),
  	PRIMARY KEY(id)
 );
+
+/*Mirar como crear Sting*/
 
 insert into users (id, loginid, password, email, fullname, description) values (UNHEX(REPLACE(UUID(),'-','')), 'okupa', UNHEX(MD5('1234')), 'okupa@info.com', 'okupainfo','okupa principal');
 select @okupaid:=id from users where loginid = 'okupa';
