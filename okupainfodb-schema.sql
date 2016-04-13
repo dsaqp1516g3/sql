@@ -23,16 +23,16 @@ CREATE TABLE casals(
   email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(512),
-  FOREIGN KEY (adminid) REFERNCES users(id),
+  FOREIGN KEY (adminid) REFERENCES users(id),
 	PRIMARY KEY (casalsid)
 );
 
 CREATE TABLE valoraciones_casals(
   userid BINARY(16) NOT NULL,
   casalsid BINARY(16) NOT NULL,
-  valoracion BOOLEAN NOT NULL
-  FOREIGN KEY (userid) REFERNCES users(id),
-  FOREIGN KEY (casalsid) REFERNCES casals(casalsid),
+  valoracion BOOLEAN NOT NULL,
+  FOREIGN KEY (userid) REFERENCES users(id),
+  FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
   PRIMARY KEY (userid,casalsid)
 );
 
@@ -45,9 +45,9 @@ CREATE TABLE events (
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
 	last_modified TIMESTAMP NOT NULL,
-  	creation_timestamp DATETIME not null default current_timestamp,
-  	FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
-  	PRIMARY KEY (id)
+	creation_timestamp DATETIME not null default current_timestamp,
+  FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
+  PRIMARY KEY (id)
 );
 
 CREATE TABLE auth_tokens (
@@ -110,6 +110,5 @@ insert into casals (casalsid, adminid, email, name, description, localization, l
 
 insert into casals (casalsid, adminid, email, name, description, localization, latitud, longitud, validado) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal2@casal.com', 'Casal Sex Pistols', 'Anarchy in the UK', 'Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823, true);
 
-select @casalsid:=id from casals where email = 'casal2@casal.com';
-insert into events (id, casalsid, title, descripcion, localization, latitud, longitud)
-values (UNHEX(REPLACE(UUID(),'-','')), @casalsid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
+select @casalsid:=email from casals where email = 'casal2@casal.com';
+insert into events (id, casalsid, title, descripcion, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), @casalsid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
