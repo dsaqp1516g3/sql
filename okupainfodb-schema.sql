@@ -10,7 +10,6 @@ CREATE TABLE users (
 	email VARCHAR(255) NOT NULL,
 	fullname VARCHAR(255) NOT NULL,
 	description VARCHAR(512),
-/*  imagenperfil LONGBLOB,*/
 	PRIMARY KEY (id)
 );
 
@@ -21,7 +20,7 @@ CREATE TABLE casals(
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
   validado BOOLEAN NOT NULL DEFAULT FALSE,
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(512),
   FOREIGN KEY (adminid) REFERENCES users(id),
@@ -45,7 +44,6 @@ CREATE TABLE events (
 	localization VARCHAR(264)NOT NULL,
 	latitud DOUBLE DEFAULT 0,
 	longitud DOUBLE DEFAULT 0,
-/*  imagenevento LONGBLOB,*/
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
