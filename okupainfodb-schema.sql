@@ -125,9 +125,9 @@ insert into users (id, loginid, password, email, fullname, description) values (
 select @adminid:=id from users where loginid = 'admin';
 insert into user_roles (userid, role) values (@adminid, 'admin');
 
-insert into casals (casalsid, adminid, email, name, description, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal@casal.com', 'Casal Zeus', 'Te sentirás en el Olimpo', 'Passeig de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3897264, 2.1679474);
+insert into casals (casalid, adminid, email, name, description, localization, latitude, longitude) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal@casal.com', 'Casal Zeus', 'Te sentirás en el Olimpo', 'Passeig de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3897264, 2.1679474);
 
-insert into casals (casalsid, adminid, email, name, description, localization, latitud, longitud, validado) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal2@casal.com', 'Casal Sex Pistols', 'Anarchy in the UK', 'Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823, true);
+insert into casals (casalid, adminid, email, name, description, localization, latitude, longitude, validado) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal2@casal.com', 'Casal Sex Pistols', 'Anarchy in the UK', 'Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823, true);
 
-select @casalsid:=email from casals where email = 'casal2@casal.com';
-insert into events (id, casalsid, title, descripcion, localization, latitud, longitud) values (UNHEX(REPLACE(UUID(),'-','')), @casalsid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
+select @casalid:=email from casals where email = 'casal2@casal.com';
+insert into events (id, casalid, title, description, localization, latitude, longitude) values (UNHEX(REPLACE(UUID(),'-','')), @casalid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
