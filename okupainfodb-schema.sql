@@ -14,39 +14,39 @@ CREATE TABLE users (
 );
 
 CREATE TABLE casals(
-	casalsid BINARY(16) NOT NULL,
+	casalid BINARY(16) NOT NULL,
   adminid  BINARY(16) NOT NULL,
 	localization VARCHAR(264) NOT NULL, /*Donde se encuentra el casal (Pasaremos la dirección a la API de Google Maps que nos devolvera las coordenadas*/
-	latitud DOUBLE DEFAULT 0,
-	longitud DOUBLE DEFAULT 0,
+	latitude DOUBLE DEFAULT 0,
+	longitude DOUBLE DEFAULT 0,
   validado BOOLEAN NOT NULL DEFAULT FALSE,
   email VARCHAR(255) NOT NULL UNIQUE,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(512),
   FOREIGN KEY (adminid) REFERENCES users(id),
-	PRIMARY KEY (casalsid)
+	PRIMARY KEY (casalid)
 );
 
 CREATE TABLE valoraciones_casals(
   userid BINARY(16) NOT NULL,
-  casalsid BINARY(16) NOT NULL,
+  casalid BINARY(16) NOT NULL,
   valoracion BOOLEAN NOT NULL,
   FOREIGN KEY (userid) REFERENCES users(id),
-  FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
-  PRIMARY KEY (userid,casalsid)
+  FOREIGN KEY (casalid) REFERENCES casals(casalid),
+  PRIMARY KEY (userid,casalid)
 );
 
 CREATE TABLE events (
 	id BINARY(16) NOT NULL,
-	casalsid BINARY(16) NOT NULL,
+	casalid BINARY(16) NOT NULL,
  	title VARCHAR(100) NOT NULL,
-	descripcion VARCHAR(500) NOT NULL,
+	description VARCHAR(500) NOT NULL,
 	localization VARCHAR(264)NOT NULL,
-	latitud DOUBLE DEFAULT 0,
-	longitud DOUBLE DEFAULT 0,
+	latitude DOUBLE DEFAULT 0,
+	longitude DOUBLE DEFAULT 0,
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
-  FOREIGN KEY (casalsid) REFERENCES casals(casalsid),
+  FOREIGN KEY (casalid) REFERENCES casals(casalid),
   PRIMARY KEY (id)
 );
 
@@ -95,7 +95,7 @@ CREATE TABLE comments_casals (
 	casalid BINARY (16) NOT NULL,
 	content VARCHAR(512) NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
-	FOREIGN KEY (casalid) REFERENCES casals(casalsid),
+	FOREIGN KEY (casalid) REFERENCES casals(casalid),
 	FOREIGN KEY (creatorid) REFERENCES users(id),
 	PRIMARY KEY(id)
 );
