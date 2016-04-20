@@ -129,5 +129,5 @@ insert into casals (casalid, adminid, email, name, description, localization, la
 
 insert into casals (casalid, adminid, email, name, description, localization, latitude, longitude, validado) values (UNHEX(REPLACE(UUID(),'-','')), @adminid, 'casal2@casal.com', 'Casal Sex Pistols', 'Anarchy in the UK', 'Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823, true);
 
-select @casalid:=email from casals where email = 'casal2@casal.com';
+select @casalid:=casalid from casals where email = 'casal2@casal.com';
 insert into events (id, casalid, title, description, localization, latitude, longitude) values (UNHEX(REPLACE(UUID(),'-','')), @casalid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
