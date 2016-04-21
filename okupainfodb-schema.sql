@@ -44,6 +44,7 @@ CREATE TABLE events(
 	localization VARCHAR(264)NOT NULL,
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
+	eventdate TIMESTAMP NOT NULL,
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
@@ -130,13 +131,12 @@ insert into casals (casalid, adminid, email, name, description, localization, la
 
 select @casalid:=casalid from casals where email = 'casal2@casal.com';
 select @casalid1:=casalid from casals where email = 'casal@casal.com';
-insert into events (id, casalid, title, description, localization, latitude, longitude) values (UNHEX(REPLACE(UUID(),'-','')), @casalid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
-insert into events (id, casalid, title, description, localization, latitude, longitude) values (UNHEX(REPLACE(UUID(),'-','')), @casalid1, 'Info fumeta','informem fumetes amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823);
+insert into events (id, casalid, title, description, localization, latitude, longitude, eventdate) values (UNHEX(REPLACE(UUID(),'-','')), @casalid, 'Kedada fumeta','fumem amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823,'2038-01-19 03:14:07');
+insert into events (id, casalid, title, description, localization, latitude, longitude, eventdate) values (UNHEX(REPLACE(UUID(),'-','')), @casalid1, 'Info fumeta','informem fumetes amb el amics','Avenida de Gràcia, la Dreta de l\'Eixample, Eixample, Barcelona, BCN, Catalonia, 08007, Spain', 41.3942409, 2.158823, '2020-01-19 03:14:07');
 
 select @eventoid:=id from events where title = 'Kedada fumeta';
 select @eventoid2:=id from events where title = 'Info fumeta';
 insert into users_events (userid, eventoid) values (@bobid,@eventoid);
 insert into users_events (userid, eventoid) values (@bobid,@eventoid2);
-/*Get events of users, all of them*/
-/*select hex('11E91176072311E6838508002764EE77') as eventid, e.casalid, e.title, e.description, e.localization from events e, users_events uv where uv.userid=unhex(?) and u.id=uv.userid
-select hex(u.id) as id from users u, auth_tokens t where t.token=unhex(?) and u.id=t.userid*/
+
+
