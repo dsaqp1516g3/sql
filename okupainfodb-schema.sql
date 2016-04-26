@@ -28,12 +28,13 @@ CREATE TABLE casals(
 );
 
 CREATE TABLE valoraciones_casals(
+	id BINARY(16) NOT NULL,
   	userid BINARY(16) NOT NULL,
   	casalid BINARY(16) NOT NULL,
-  	valoracion BOOLEAN NOT NULL,
+  	valoracion BINARY NOT NULL,
   	FOREIGN KEY (userid) REFERENCES users(id),
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
- 	PRIMARY KEY (userid,casalid)
+ 	PRIMARY KEY (id)
 );
 
 CREATE TABLE events(
