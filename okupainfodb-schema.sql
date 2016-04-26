@@ -29,10 +29,10 @@ CREATE TABLE casals(
 
 CREATE TABLE valoraciones_casals(
 	id BINARY(16) NOT NULL,
-  	userid BINARY(16) NOT NULL,
+  	loginid BINARY(16) NOT NULL,
   	casalid BINARY(16) NOT NULL,
   	valoracion BINARY NOT NULL,
-  	FOREIGN KEY (userid) REFERENCES users(id),
+  	FOREIGN KEY (loginid) REFERENCES users(id),
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
  	PRIMARY KEY (id)
 );
