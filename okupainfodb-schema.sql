@@ -19,7 +19,7 @@ CREATE TABLE casals(
 	localization VARCHAR(264) NOT NULL, /*Donde se encuentra el casal (Pasaremos la dirección a la API de Google Maps que nos devolvera las coordenadas*/
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
-  	validado BOOLEAN NOT NULL DEFAULT FALSE,
+  	valoracion BOOLEAN NOT NULL DEFAULT FALSE,
   	email VARCHAR(255) NOT NULL UNIQUE,
   	name VARCHAR(255) NOT NULL,
   	description VARCHAR(512),
@@ -28,12 +28,13 @@ CREATE TABLE casals(
 );
 
 CREATE TABLE valoraciones_casals(
-  	userid BINARY(16) NOT NULL,
+	id BINARY(16) NOT NULL,
+  	loginid BINARY(16) NOT NULL,
   	casalid BINARY(16) NOT NULL,
-  	valoracion BOOLEAN NOT NULL,
-  	FOREIGN KEY (userid) REFERENCES users(id),
+  	valoracion BINARY NOT NULL,
+  	FOREIGN KEY (loginid) REFERENCES users(id),
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
- 	PRIMARY KEY (userid,casalid)
+ 	PRIMARY KEY (id)
 );
 
 CREATE TABLE events(
@@ -45,6 +46,7 @@ CREATE TABLE events(
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
 	eventdate DATETIME NOT NULL,
+	eventdate TIMESTAMP NOT NULL,
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
@@ -141,10 +143,12 @@ select @eventoid2:=id from events where title = 'Info fumeta';
 insert into users_events (userid, eventoid) values (@bobid,@eventoid);
 insert into users_events (userid, eventoid) values (@bobid,@eventoid2);
 
+
 select @creatorid:=id from users where loginid = 'spongebob';
 select @creatorid1:=id from users where loginid = 'okupa';
 insert into comments_events (id, creatorid, eventoid, content) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid, @eventoid, 'Me parece super interesante eso');
 insert into comments_events (id, creatorid, eventoid, content) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid1, @eventoid2, 'Me parece super interesante eso');
 insert into comments_casals (id, creatorid, casalid, content) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid1, @casalid, 'Amazing this is for me');
 insert into comments_casals (id, creatorid, casalid, content) values (UNHEX(REPLACE(UUID(),'-','')), @creatorid, @casalid1, 'Amazing this is for me');
+
 
