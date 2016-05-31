@@ -46,7 +46,6 @@ CREATE TABLE events(
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
 	eventdate DATETIME NOT NULL,
-	eventdate TIMESTAMP NOT NULL,
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
