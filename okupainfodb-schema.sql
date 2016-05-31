@@ -19,7 +19,7 @@ CREATE TABLE casals(
 	localization VARCHAR(264) NOT NULL, /*Donde se encuentra el casal (Pasaremos la dirección a la API de Google Maps que nos devolvera las coordenadas*/
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
-  	valoracion BOOLEAN NOT NULL DEFAULT FALSE,
+  	validado BOOLEAN NOT NULL DEFAULT FALSE,
   	email VARCHAR(255) NOT NULL UNIQUE,
   	name VARCHAR(255) NOT NULL,
   	description VARCHAR(512),
