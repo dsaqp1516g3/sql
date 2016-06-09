@@ -10,6 +10,7 @@ CREATE TABLE users(
 	email VARCHAR(255) NOT NULL,
 	fullname VARCHAR(255) NOT NULL,
 	description VARCHAR(512),
+	image varchar(100),
 	PRIMARY KEY (id)
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE casals(
   	validado BOOLEAN NOT NULL DEFAULT FALSE,
   	email VARCHAR(255) NOT NULL UNIQUE,
   	name VARCHAR(255) NOT NULL,
+	image varchar(100),
   	description VARCHAR(512),
   	FOREIGN KEY (adminid) REFERENCES users(id),
 	PRIMARY KEY (casalid)
@@ -46,6 +48,7 @@ CREATE TABLE events(
 	latitude DOUBLE DEFAULT 0,
 	longitude DOUBLE DEFAULT 0,
 	eventdate DATETIME NOT NULL,
+	image varchar(100),
 	last_modified TIMESTAMP NOT NULL,
 	creation_timestamp DATETIME not null default current_timestamp,
   	FOREIGN KEY (casalid) REFERENCES casals(casalid),
